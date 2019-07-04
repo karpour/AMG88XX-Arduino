@@ -6,11 +6,11 @@
  * Contact: www.ohnitsch.net
  *
  * This library allows interfacing of an AMG88XX infrared thermopile array with
- * an Arduino board. It should be easily portable however.
+ * an Arduino board. It should be easily portable.
  *
  * Features supported:
- * 	* Reading temperature values as 캜
- * 	* Reading internal thermistor value in 캜
+ * 	* Reading temperature values as 째C
+ * 	* Reading internal thermistor value in 째C
  * 	* Setting power mode (Normal, Sleep, Stand-by)
  * 	* Setting frame rate (1FPS or 10FPS)
  * 	* Setting moving average processing option
@@ -36,7 +36,7 @@ void reset(){
 }
 
 /**
- * Writes the temperature values in 캜 into a float array.
+ * Writes the temperature values in 째C into a float array.
  * @param result Float array of the size 64 used for storing results
  */
 void readValues(float result[]){
@@ -59,6 +59,11 @@ void readValues(float result[]){
 	}
 }
 
+/**
+ * Calculates average of the 64 temperature values
+ * @param data Array of 64 float values
+ * @return Average value
+ */
 float calculateAverage(float data[]){
 	float avg = 0.0;
 	for (int i = 0; i < 64; i++) {
@@ -67,6 +72,11 @@ float calculateAverage(float data[]){
 	return avg/64.0;
 }
 
+/**
+ * Calculates variance the 64 temperature values
+ * @param data Array of 64 float values
+ * @return Variance
+ */
 float calculateVariance(float data[]){
 		float variance = 0.0;
 		float avg = calculateAverage(data);
@@ -132,8 +142,8 @@ void setFrameRate(uint8_t frameRate){
 }
 
 /**
- * Returns the temperature of the internal thermistor in 캜
- * @return temperature of the internal thermistor in 캜
+ * Returns the temperature of the internal thermistor in 째C
+ * @return temperature of the internal thermistor in 째C
  */
 float readThermistor(){
     // Request 2 bytes from 0x0E in order to read the thermistor value
@@ -157,7 +167,7 @@ float readThermistor(){
  * @param movAvg true for moving average mode, false for normal mode
  */
 void setMovingAverage(bool movAvg){
-	// As per Data sheet, for some reason we have to write some values into address 0x1F
+	// According to the data sheet, for some reason we have to write some values into address 0x1F
 	Wire.beginTransmission(amg_addr);
 	Wire.write(0x1F);
 	Wire.write(0x50);
