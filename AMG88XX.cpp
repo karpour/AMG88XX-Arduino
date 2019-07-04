@@ -1,9 +1,8 @@
-#include "AMG88XX.h"
-
 /**
- * AMG88XX library for Arduino/Genuino v0.2
- * Author: Thomas Novotny
- * Contact: www.ohnitsch.net
+ * @file AMG88XX.cpp
+ * @author Thomas Novotny
+ * @brief AMG88XX library for Arduino/Genuino v0.2
+ * @version 0.2
  *
  * This library allows interfacing of an AMG88XX infrared thermopile array with
  * an Arduino board. It should be easily portable.
@@ -21,11 +20,13 @@
  *
  */
 
+#include "AMG88XX.h"
+
 char amg_addr = 0x68;
 float temps[64];
 
 /**
- * Resets module and puts all registers into their original boot up states.
+ * @brief Resets module and puts all registers into their original boot up states.
  * Useful for debugging
  */
 void reset(){
@@ -36,7 +37,8 @@ void reset(){
 }
 
 /**
- * Writes the temperature values in °C into a float array.
+ * @brief Writes the temperature values in °C into a float array.
+ * 
  * @param result Float array of the size 64 used for storing results
  */
 void readValues(float result[]){
@@ -60,7 +62,8 @@ void readValues(float result[]){
 }
 
 /**
- * Calculates average of the 64 temperature values
+ * @brief Calculates average of the 64 temperature values
+ * 
  * @param data Array of 64 float values
  * @return Average value
  */
@@ -73,7 +76,8 @@ float calculateAverage(float data[]){
 }
 
 /**
- * Calculates variance the 64 temperature values
+ * @brief Calculates variance the 64 temperature values
+ * 
  * @param data Array of 64 float values
  * @return Variance
  */
@@ -89,12 +93,13 @@ float calculateVariance(float data[]){
 }
 
 /**
- * Sets AMG power mode
+ * @brief Sets AMG power mode
  * Arguments:
  * 		AMG_PCTL_NORMAL - Normal operating mode
  *		AMG_PCTL_SLEEP - Sleep mode
  * 		AMG_PCTL_STANDBY10 - Stand-by (10 sec intermittence)
  * 		AMG_PCTL_STANDBY60 - Stand-by (60 sec intermittence)
+ * 
  * @param powerMode Mode that the AMG will enter (AMG_PCTL_NORMAL, AMG_PCTL_SLEEP, AMG_PCTL_STANDBY10 or AMG_PCTL_STANDBY60)
  */
 void setPowerMode(uint8_t powerMode){
@@ -105,21 +110,21 @@ void setPowerMode(uint8_t powerMode){
 }
 
 /**
- * Puts AMG88XX into sleep mode
+ * @brief Puts AMG88XX into sleep mode
  */
 void sleep(){
 	setPowerMode(AMG_PCTL_SLEEP);
 }
 
 /**
- * Puts AMG88XX into 10s standby mode
+ * @brief Puts AMG88XX into 10s standby mode
  */
 inline void standBy10(){
 	setPowerMode(AMG_PCTL_STANDBY10);
 }
 
 /**
- * Wakes up AMG88XX from sleep or standby mode
+ * @brief Wakes up AMG88XX from sleep or standby mode
  */
 void wakeUp(){
 	setPowerMode(AMG_PCTL_NORMAL);
@@ -128,10 +133,11 @@ void wakeUp(){
 }
 
 /**
- * Sets the framerate of the AMG88XX
+ * @brief Sets the framerate of the AMG88XX
  * Arguments:
  * 		AMG_FPSC_FRAMERATE_1  -  1 FPS
  * 		AMG_FPSC_FRAMERATE_10 - 10 FPS
+ * 
  * @param frameRate Either AMG_FPSC_FRAMERATE_1 or AMG_FPSC_FRAMERATE_10
  */
 void setFrameRate(uint8_t frameRate){
@@ -142,7 +148,8 @@ void setFrameRate(uint8_t frameRate){
 }
 
 /**
- * Returns the temperature of the internal thermistor in °C
+ * @brief Returns the temperature of the internal thermistor in °C
+ * 
  * @return temperature of the internal thermistor in °C
  */
 float readThermistor(){
@@ -162,8 +169,9 @@ float readThermistor(){
 }
 
 /**
- * Sets twice moving average (true) or no moving average (false)
+ * @brief Sets twice moving average (true) or no moving average (false)
  * Default at startup is no moving average
+ * 
  * @param movAvg true for moving average mode, false for normal mode
  */
 void setMovingAverage(bool movAvg){

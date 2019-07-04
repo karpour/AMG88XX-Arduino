@@ -40,4 +40,4 @@ float readThermistor();
 float calculateVariance(float data[]);
 float calculateAverage(float data[]);
 
-#endif /* _Arduino_AMG88XX_H_ */
+#endif

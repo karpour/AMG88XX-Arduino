@@ -1,10 +1,15 @@
-#include "AMG88XX.h"
-
 /**
+ * @file AMGLogger.ino
+ * @author Thomas Novotny
+ * @brief Test program that logs sensor values to serial port
+ * @version 0.1
+ * 
  * Test program that logs the sensor values via the serial port at 115200baud
  * Once any character is received over serial, the AMG wakes up, stabilizes (15sec!)
  * and data is sent back.
  */
+
+#include "AMG88XX.h"
 
 char addr = 0x68;
 
